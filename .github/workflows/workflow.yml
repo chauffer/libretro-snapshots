@@ -1,0 +1,32 @@
+name: Publish to Docker Hub
+on:
+  push:
+  schedule:
+    - cron: "15 0,12 * * *"
+
+jobs:
+  dockerhub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          username: chauffer
+          password: ${{ secrets.DOCKER_TOKEN }}
+          repository: chauffer/libretro-snapshots
+          cache_froms: chauffer/libretro-snapshots
+          tag_with_ref: true
+          tag_with_sha: true
+  libretro-snapshots:
+    runs-on: ubuntu-latest
+    needs: dockerhub
+    container:
+      image: chauffer/libretro-snapshots
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    steps:
+      - name: run
+        run: /app/run.sh
