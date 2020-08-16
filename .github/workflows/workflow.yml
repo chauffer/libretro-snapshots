@@ -1,6 +1,5 @@
 name: Backup libretro
 on:
-  push:
   schedule:
     - cron: "15 0,12 * * *"
 

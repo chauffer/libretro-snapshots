@@ -20,7 +20,6 @@ Should you need to restore a repository, you can untar its latest release, it wi
 # change the name to whatever you want
 name: Backup libretro organization
 on:
-  push:
   schedule:
     - cron: "15 0,12 * * *"
 jobs:
