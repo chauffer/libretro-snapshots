@@ -1,4 +1,4 @@
-name: Publish to Docker Hub
+name: Backup libretro
 on:
   push:
   schedule:
